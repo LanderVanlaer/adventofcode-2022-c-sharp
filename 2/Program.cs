@@ -1,30 +1,39 @@
 ﻿StreamReader file = new(args[0]);
 
-Dictionary<char, char> convert = new()
-{
-    { 'A', 'X' },
-    { 'B', 'Y' },
-    { 'C', 'Z' },
-};
 Dictionary<char, char> wins = new()
 {
-    { 'X', 'Y' },
-    { 'Y', 'Z' },
-    { 'Z', 'X' },
+    { 'A', 'B' },
+    { 'B', 'C' },
+    { 'C', 'A' },
+};
+Dictionary<char, char> loses = new()
+{
+    { 'A', 'C' },
+    { 'B', 'A' },
+    { 'C', 'B' },
 };
 
 int points = 0;
 
 while (file.ReadLine() is { } line)
 {
-    char opponent = convert[line[0]];
-    char self = line[2];
+    char opponent = line[0];
+    char self = line[2] switch
+    {
+        // Lose
+        'X' => loses[opponent],
+        // Draw
+        'Y' => opponent,
+        // Win
+        'Z' => wins[opponent],
+        _ => throw new Exception("Invalid input"),
+    };
 
     points += self switch
     {
-        'X' => 1,
-        'Y' => 2,
-        'Z' => 3,
+        'A' => 1,
+        'B' => 2,
+        'C' => 3,
         _ => throw new Exception("Invalid input"),
     };
 
