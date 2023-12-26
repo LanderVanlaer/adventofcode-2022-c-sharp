@@ -66,9 +66,13 @@ internal partial class CargoCrane
             int from = int.Parse(value.Groups[2].Value) - 1;
             int to = int.Parse(value.Groups[3].Value) - 1;
 
+            char[] chars = new char[count];
 
             for (int i = 0; i < count; ++i)
-                _stacks[to].Push(_stacks[from].Pop());
+                chars[i] = _stacks[from].Pop();
+
+            foreach (char c in chars.Reverse())
+                _stacks[to].Push(c);
         }
     }
 
