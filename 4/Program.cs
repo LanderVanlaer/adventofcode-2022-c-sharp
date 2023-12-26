@@ -8,7 +8,7 @@ while (file.ReadLine() is { } line)
     Elf elfOne = Elf.Parse(line[..i]);
     Elf elfTwo = Elf.Parse(line[(i + 1)..]);
 
-    if (elfOne.IncludesElve(elfTwo) || elfTwo.IncludesElve(elfOne))
+    if (elfOne.Overlaps(elfTwo))
         ++sum;
 }
 
@@ -34,5 +34,5 @@ internal readonly struct Elf
         return new Elf(int.Parse(start), int.Parse(end));
     }
 
-    public bool IncludesElve(Elf elf) => StartId <= elf.StartId && elf.EndId <= EndId;
+    public bool Overlaps(Elf elf) => StartId <= elf.EndId && elf.StartId <= EndId;
 }
