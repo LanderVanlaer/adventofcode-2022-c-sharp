@@ -1,6 +1,6 @@
 ﻿StreamReader file = new(args[0]);
 
-char[] buffer = new char[4];
+char[] buffer = new char[14];
 int location;
 
 for (location = 0; location < 3; location++)
