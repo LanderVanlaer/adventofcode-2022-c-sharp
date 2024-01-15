@@ -40,6 +40,7 @@ while (file.ReadLine() is { } line)
 Console.WriteLine(root.Size);
 
 Console.WriteLine(GetSumOfSizesUnder(root, 100000));
+Console.WriteLine(GetDirectoryWithTheSmallestSizeAbove(root, root.Size - (70_000_000 - 30_000_000)));
 
 return;
 
@@ -54,4 +55,14 @@ int GetSumOfSizesUnder(Directory directory, int under)
     sum += directory.Directories.Sum(subDirectory => GetSumOfSizesUnder(subDirectory, under));
 
     return sum;
+}
+
+int GetDirectoryWithTheSmallestSizeAbove(Directory directory, int size)
+{
+    int smallest = directory.Size;
+
+    return smallest < size
+        ? Int32.MaxValue
+        : directory.Directories.Select(subDirectory => GetDirectoryWithTheSmallestSizeAbove(subDirectory, size))
+            .Prepend(smallest).Min();
 }
