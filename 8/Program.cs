@@ -7,6 +7,6 @@ Forest forest = new();
 while (!file.EndOfStream)
     forest.AddTrees(file.ReadLine() ?? throw new InvalidOperationException());
 
-forest.CalculateView();
+forest.CalculateNumberOfViewableTrees();
 
-Console.WriteLine(forest.GetViewableTrees());
+Console.WriteLine(forest.GetTreeWithHighestCount().Score);
