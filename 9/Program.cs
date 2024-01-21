@@ -4,8 +4,15 @@ using Action = _9.Action;
 StreamReader file = new(args[0]);
 
 Graph graph = new();
-Cell head = graph[0, 0];
-Cell tail = head;
+
+//0 => head, 9 => tail
+Cell[] cells = new Cell[10];
+
+for (int i = 0; i < 10; i++)
+    cells[i] = graph[0, 0];
+
+cells[9].Visit();
+
 
 while (file.ReadLine() is { } line)
 {
@@ -14,12 +21,13 @@ while (file.ReadLine() is { } line)
 
     for (int i = 0; i < steps; i++)
     {
-        head = graph.DoAction(head, action);
+        cells[0] = graph.DoAction(cells[0], action);
 
-        if (!head.Around(tail))
-            tail = graph.DoAction(tail, tail.NextAction(head));
+        for (int j = 1; j < 10; j++)
+            if (!cells[j - 1].Around(cells[j]))
+                cells[j] = graph.DoAction(cells[j], cells[j].NextAction(cells[j - 1]));
 
-        tail.Visit();
+        cells[9].Visit();
     }
 }
 
